@@ -45,7 +45,7 @@
 					},
 					{
 						"claim_id": "F050",
-						"text": "The repository includes a feature for fast terminal task capture.",
+						"text": "The repository includes fast terminal task capture.",
 						"type": "feature",
 						"fact_ids": [
 							"F050"
@@ -93,7 +93,7 @@
 					},
 					{
 						"claim_id": "F043",
-						"text": "The test script uses node --test tests/*.test.js.",
+						"text": "The test script is 'node --test tests/*.test.js'.",
 						"type": "dependency",
 						"fact_ids": [
 							"F043"
@@ -146,7 +146,7 @@
 		},
 		{
 			"claim_id": "F050",
-			"text": "The repository includes a feature for fast terminal task capture.",
+			"text": "The repository includes fast terminal task capture.",
 			"type": "feature",
 			"fact_ids": [
 				"F050"
@@ -194,7 +194,7 @@
 		},
 		{
 			"claim_id": "F043",
-			"text": "The test script uses node --test tests/*.test.js.",
+			"text": "The test script is 'node --test tests/*.test.js'.",
 			"type": "dependency",
 			"fact_ids": [
 				"F043"
@@ -274,7 +274,7 @@
 		},
 		{
 			"claim_id": "F050",
-			"text": "The repository includes a feature for fast terminal task capture.",
+			"text": "The repository includes fast terminal task capture.",
 			"type": "feature",
 			"fact_ids": [
 				"F050"
@@ -340,13 +340,13 @@
 		},
 		{
 			"claim_id": "F043",
-			"text": "The test script uses node --test tests/*.test.js.",
+			"text": "The test script is 'node --test tests/*.test.js'.",
 			"type": "dependency",
 			"fact_ids": [
 				"F043"
 			],
 			"status": "needs_input",
-			"reason": "dependency 'node' not found in package.json",
+			"reason": "dependency name could not be identified",
 			"evidence": []
 		}
 	],
@@ -975,21 +975,21 @@
 		}
 	],
 	"runRecord": {
-		"timestamp": "2026-10-23T09:35:38.521Z",
+		"timestamp": "2026-10-23T11:42:39.231Z",
 		"model": "gemma3:4b-it-q4_K_M",
 		"fallback_used": false,
 		"fallback_reason": null,
 		"timings": {
-			"scan": 132,
-			"ledger": 9,
-			"generate": 11383,
+			"scan": 106,
+			"ledger": 8,
+			"generate": 14676,
 			"verify": 3,
-			"total": 11527
+			"total": 14793
 		},
 		"ollama": {
 			"prompt_eval_count": 1671,
-			"eval_count": 577,
-			"total_duration": 11336471200
+			"eval_count": 576,
+			"total_duration": 14635931800
 		},
 		"claim_counts": {
 			"verified": 3,
@@ -998,5 +998,6 @@
 			"total": 12
 		}
 	},
-	"recordPath": "C:\\Users\\mohan\\.gemini\\antigravity\\worktrees\\40ccc5f3-f7ba-4f80-a641-4eac35665eeb\\subagent-Phase-P4-Builder-self-315d9df4\\runs\\2026-10-23T09-35-38.521Z-gemma3-4b-it-q4_K_M.json"
+	"recordPath": "D:\\Hackathons\\Hacktoberfest\\sloth-scribe\\runs\\2026-10-23T11-42-39.231Z-gemma3-4b-it-q4_K_M.json",
+	"markdown": "There were 14 commits made. The first commit occurred on 2026-03-02. The last commit occurred on 2026-03-13. [NEEDS INPUT: feature unproven: no supporting commit or file evidence cited] [NEEDS INPUT: metric needs measured evidence] [NEEDS INPUT: unproven feature: README text alone does not prove a feature] [NEEDS INPUT: unproven feature: README text alone does not prove a feature] [NEEDS INPUT: feature 'dark mode' unproven: README text alone does not prove a feature] [NEEDS INPUT: unproven feature: README text alone does not prove a feature] [NEEDS INPUT: number not in cited facts] [NEEDS INPUT: number not in cited facts] [NEEDS INPUT: dependency name could not be identified]"
 }

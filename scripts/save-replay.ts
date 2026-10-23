@@ -9,18 +9,40 @@ import { Claim } from '../src/core/verifier/types';
 import { verifyClaims } from '../src/core/verifier/verifier';
 
 async function saveReplay(): Promise<void> {
-	const repoPath = path.resolve('fixtures/demo-repo');
-	if (!fs.existsSync(repoPath)) {
-		console.error('fixtures/demo-repo not found. Run npm run fixture first.');
-		process.exit(1);
-	}
-
 	const publicDir = path.resolve('public');
 	if (!fs.existsSync(publicDir)) {
 		fs.mkdirSync(publicDir, { recursive: true });
 	}
 
 	const outputPath = path.join(publicDir, 'demo-run.json');
+
+	// If a specific run JSON file was specified as an argument, copy it directly
+	const chosenFile = process.argv[2];
+	if (chosenFile) {
+		const resolvedSource = path.resolve(chosenFile);
+		if (!fs.existsSync(resolvedSource)) {
+			console.error(`Error: Source file does not exist: ${chosenFile}`);
+			process.exit(1);
+		}
+
+		try {
+			const content = fs.readFileSync(resolvedSource, 'utf8');
+			// Validate that the chosen file is valid JSON
+			JSON.parse(content);
+			fs.copyFileSync(resolvedSource, outputPath);
+			console.log(`Copied chosen run JSON from ${chosenFile} to ${outputPath}`);
+			return;
+		} catch (err) {
+			console.error(`Error validating chosen JSON file ${chosenFile}: ${String(err)}`);
+			process.exit(1);
+		}
+	}
+
+	const repoPath = path.resolve('fixtures/demo-repo');
+	if (!fs.existsSync(repoPath)) {
+		console.error('fixtures/demo-repo not found. Run npm run fixture first.');
+		process.exit(1);
+	}
 
 	console.log('Generating recorded run for demo-run.json...');
 
