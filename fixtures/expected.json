@@ -1,0 +1,102 @@
+{
+	"commit_total": 14,
+	"first_commit_date": "2026-03-02",
+	"last_commit_date": "2026-03-13",
+	"commits": [
+		{
+			"hash": "ee29103",
+			"date": "2026-03-02",
+			"subject": "init project with package.json and README"
+		},
+		{
+			"hash": "b8e406e",
+			"date": "2026-03-03",
+			"subject": "add task store foundation"
+		},
+		{
+			"hash": "875da98",
+			"date": "2026-03-04",
+			"subject": "add unit tests for task store"
+		},
+		{
+			"hash": "d1d890a",
+			"date": "2026-03-05",
+			"subject": "create CLI entrypoint with commander"
+		},
+		{
+			"hash": "731a53f",
+			"date": "2026-03-06",
+			"subject": "add formatting helper for output display"
+		},
+		{
+			"hash": "d38fde2",
+			"date": "2026-03-07",
+			"subject": "integrate task display formatting into CLI"
+		},
+		{
+			"hash": "75a3fb7",
+			"date": "2026-03-08",
+			"subject": "add task validation schema using zod"
+		},
+		{
+			"hash": "a39ea2b",
+			"date": "2026-03-09",
+			"subject": "expand store test coverage for invalid inputs"
+		},
+		{
+			"hash": "cc4f592",
+			"date": "2026-03-10",
+			"subject": "implement CSV export for task lists"
+		},
+		{
+			"hash": "b8ba509",
+			"date": "2026-03-10",
+			"subject": "wire CSV export option into CLI command"
+		},
+		{
+			"hash": "ba98995",
+			"date": "2026-03-11",
+			"subject": "add unit tests for CSV export"
+		},
+		{
+			"hash": "bcada21",
+			"date": "2026-03-12",
+			"subject": "refactor output formatters for table borders"
+		},
+		{
+			"hash": "a256c64",
+			"date": "2026-03-13",
+			"subject": "improve store clear method and error handling"
+		},
+		{
+			"hash": "6bf5ff8",
+			"date": "2026-03-13",
+			"subject": "finalize CLI documentation and examples in README"
+		}
+	],
+	"files": [
+		"README.md",
+		"package.json",
+		"src/cli.js",
+		"src/export.js",
+		"src/format.js",
+		"src/store.js",
+		"tests/export.test.js",
+		"tests/store.test.js"
+	],
+	"dependencies": [
+		"commander",
+		"zod"
+	],
+	"readme_lines": [
+		{
+			"line": 8,
+			"text": "Cuts build time by 60% compared to the old pipeline."
+		},
+		{
+			"line": 14,
+			"text": "- Built-in dark mode support"
+		}
+	],
+	"has_measurements": false
+}
