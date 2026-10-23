@@ -1,0 +1,6 @@
+
+# sloth-scribe
+.env
+fixtures/demo-repo/
+runs/
+!public/demo-run.json

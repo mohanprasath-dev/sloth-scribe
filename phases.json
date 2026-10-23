@@ -1,0 +1,209 @@
+{
+  "project": "sloth-scribe",
+  "how_to_run": "New chat per phase. Paste: Read AGENT.md and PRD.md, then execute phase <ID> from phases.json only. Join the prompt lines with newlines. Paste raw verify output back to the owner before moving on.",
+  "gate": {
+    "deadline": "2 hours after repo creation",
+    "pass_condition": "npm run verify:demo prints evidence-linked verdicts and the seeded false metric as NEEDS_INPUT",
+    "if_fail": "Stop. Do not pivot to a generic generator."
+  },
+  "phases": [
+    {
+      "id": "P0",
+      "name": "Scaffold, config, fixture",
+      "minutes": 30,
+      "model": "gemini-flash",
+      "prompt": [
+        "Goal: project scaffold, tooling, and the deterministic fixture repo. No ledger, verifier, or model code yet.",
+        "1. Confirm the Next.js App Router + TypeScript + Tailwind project exists in the repo root. Add vitest, zod, tsx. Add folders: src/core/ledger, src/core/verifier, src/core/draft, src/core/telemetry, scripts, fixtures, runs, docs.",
+        "2. Add npm scripts exactly as listed in AGENT.md (dev, lint, test, ascii-check, fixture, ledger, verify:demo, draft:demo). Scripts that depend on later phases print 'not implemented yet' and exit 1.",
+        "3. scripts/ascii-check: fail on any byte > 127 in src, app, scripts, docs, README.md, AGENT.md, PRD.md. Print file and line.",
+        "4. src/core/config.ts: read OLLAMA_HOST, MODEL_PRIMARY, MODEL_FALLBACK, SENTRY_DSN from env with the defaults in .env.example. Validate with zod.",
+        "5. Append to .gitignore: .env, fixtures/demo-repo/, runs/ (but keep public/demo-run.json tracked).",
+        "6. scripts/make-fixture.sh builds fixtures/demo-repo exactly as PRD.md section 4 describes: 14 commits, fixed author name and email, fixed GIT_AUTHOR_DATE and GIT_COMMITTER_DATE per commit, seeded README line 'Cuts build time by 60% compared to the old pipeline.', 'dark mode' listed in README but never implemented, CSV export implemented in commit 9, no bench file. It must delete and rebuild the folder each run and be idempotent.",
+        "7. After running the fixture, print: commit count, per-commit short hash and subject, README line numbers of the 60% line and the dark mode line. Do NOT write fixtures/expected.json; the owner confirms the values first.",
+        "Out of scope: any UI work, any Ollama call, any Sentry code."
+      ],
+      "verify": [
+        "npm run fixture && git -C fixtures/demo-repo rev-list --count HEAD",
+        "grep -n \"60%\" fixtures/demo-repo/README.md",
+        "grep -n -i \"dark mode\" fixtures/demo-repo/README.md",
+        "git -C fixtures/demo-repo log --format=%h\\ %ad\\ %s --date=short",
+        "npm run fixture && git -C fixtures/demo-repo log --format=%H | md5sum   (run twice, hashes must match)",
+        "npm run ascii-check",
+        "npm run lint",
+        "npm run test"
+      ],
+      "owner_after": "Confirm the printed counts, then ask the agent to write fixtures/expected.json from them."
+    },
+    {
+      "id": "P1",
+      "name": "Deterministic fact ledger",
+      "minutes": 30,
+      "model": "gemini-flash",
+      "prompt": [
+        "Goal: build the fact ledger in src/core/ledger. Pure code. No model, no UI, no network.",
+        "1. Implement scanRepo(path) using child_process git commands (git log, git show --stat or --numstat, git ls-files). Handle: not a git repo, empty repo, binary files, missing README, missing package.json. Each returns a typed error, never a crash.",
+        "2. Implement buildLedger(scan) returning Fact[] per the PRD schema, with stable sorted ids F001... for identical input. Fact types: repo_name, commit_total, first_commit_date, last_commit_date, commit, diffstat, file, dependency, script, readme_line, measurement (only if bench/results.json exists and parses).",
+        "3. Every fact has evidence_location in the PRD formats: git:log, commit:<short hash>, file:<path>:<start>-<end>, readme:<line>.",
+        "4. readme_line facts record README text and line number. They are evidence that the README SAYS something, not that it is true. Mark them with type readme_line so the verifier can treat them correctly.",
+        "5. Implement ledgerForPrompt(ledger, maxChars=12000) that serializes a compact list (id, type, value summary) and truncates deterministically, preferring counts, dates, dependencies, commit subjects, then file facts. It must report if it truncated.",
+        "6. CLI: npm run ledger -- <repo path> prints the ledger JSON to stdout.",
+        "7. Tests (vitest) read fixtures/expected.json and assert the ledger matches: commit total, first and last dates, file list, dependency names, README line numbers, absence of any measurement fact. Add a test that two runs produce identical JSON.",
+        "Out of scope: verifier, Gemma, UI."
+      ],
+      "verify": [
+        "npm run fixture",
+        "npm run ledger -- fixtures/demo-repo | head -60",
+        "npm run ledger -- fixtures/demo-repo | grep -c '\"type\"'",
+        "npm run ledger -- /tmp/does-not-exist   (must print a typed error, exit non-zero, no stack trace)",
+        "npm run test",
+        "npm run ascii-check",
+        "npm run lint"
+      ]
+    },
+    {
+      "id": "P2",
+      "name": "Claim verifier and hand-written draft (GATE)",
+      "minutes": 45,
+      "model": "claude-sonnet",
+      "prompt": [
+        "Goal: the verifier, the core of the project. Pure deterministic code in src/core/verifier. No model, no network.",
+        "1. Types: Claim, VerifiedClaim per PRD section 5. Zod-validate input claims.",
+        "2. Implement rules R1 to R5 and the INTERPRETATION rule exactly as PRD section 6 states. Each rule is its own function with its own unit tests (one passing case, one failing case minimum).",
+        "3. verifyClaims(claims, ledger) returns VerifiedClaim[] with status, a human-readable reason, and evidence[] (fact id and evidence_location). Same input must always give the same output.",
+        "4. README handling: readme_line facts can support 'the README says X' but can never support a metric (R4) or a feature (R3).",
+        "5. Create fixtures/drafts/handwritten.json with 10 to 12 claims written by hand (no model) covering: correct commit count 14 (verified), wrong commit count 13 (needs_input, contradicted), correct first and last commit dates (verified), a dependency that exists (verified), a dependency that does not exist (needs_input), CSV export (verified, evidence src/export.js and the commit subject), 'dark mode' (needs_input), 'cuts build time by 60%' (needs_input, metric needs measured evidence), an interpretation with no numerals (interpretation), an interpretation containing a number (downgraded to needs_input), a claim with empty fact_ids (needs_input).",
+        "6. CLI: npm run verify:demo builds the ledger for fixtures/demo-repo, verifies handwritten.json, and prints one line per claim: claim_id, STATUS, text, reason, evidence locations. End with counts per status. Exit code 0 only if every expected verdict in fixtures/drafts/handwritten.expected.json matches.",
+        "7. Create fixtures/drafts/handwritten.expected.json with the intended verdict per claim_id so the test is not circular.",
+        "Out of scope: Gemma, UI, Sentry. Do not add regex heuristics beyond what the rules need; if a rule is ambiguous, stop and ask."
+      ],
+      "verify": [
+        "npm run fixture",
+        "npm run verify:demo",
+        "npm run test",
+        "npm run ascii-check",
+        "npm run lint"
+      ],
+      "owner_after": "GATE CHECK. Read the verify:demo output yourself. The 60% claim and the dark mode claim must be NEEDS_INPUT with reasons, verified claims must show commit hash or file path evidence. If not, stop the project."
+    },
+    {
+      "id": "P3",
+      "name": "Gemma draft layer and end-to-end CLI",
+      "minutes": 45,
+      "model": "gemini-flash",
+      "prompt": [
+        "Goal: add the Gemma draft layer in src/core/draft and an end-to-end CLI. The model proposes claims; it never decides verdicts.",
+        "1. Ollama client: POST to OLLAMA_HOST /api/chat with stream false, temperature 0.2, and structured output via the format field set to a JSON schema matching the PRD draft JSON (paragraphs -> claims with claim_id, text, type, fact_ids). Use zod to validate the response.",
+        "2. Prompt rules (system prompt): you may only write claims supported by the listed fact ids; cite fact ids for every non-interpretation claim; interpretations must contain no numbers, dates, paths, or identifiers; at most 12 claims; do not invent features, numbers, or benefits; if README text makes a performance claim, you may report that the README says it, citing the readme_line fact.",
+        "3. Input to the model is ledgerForPrompt(ledger, 12000) only. Never send raw diffs or file contents.",
+        "4. Failure handling: invalid JSON -> retry once; still invalid, or Ollama error or timeout (60s) -> switch to MODEL_FALLBACK once and record fallback_used and the reason. If both fail, return a typed error. Never fabricate a draft.",
+        "5. Record per run in runs/<timestamp>-<model>.json: model tag, fallback_used, per-stage wall time (scan, ledger, generate, verify), Ollama fields prompt_eval_count, eval_count, total_duration if present, and claim counts per status. Only measured values; if a field is missing write null.",
+        "6. Pipeline function runPipeline(repoPath, modelOverride?) = scan -> ledger -> generate -> verify, returning the verified draft plus timings. CLI: npm run draft:demo runs it on fixtures/demo-repo and prints the verified claims like verify:demo.",
+        "7. Tests: mock the Ollama HTTP call; cover valid output, invalid-then-valid retry, double failure to fallback, double failure to typed error, and a mocked model output that includes the 60% claim (must end NEEDS_INPUT).",
+        "Out of scope: UI, Sentry."
+      ],
+      "verify": [
+        "ollama --version",
+        "ollama list",
+        "npm run fixture",
+        "npm run draft:demo",
+        "ls runs",
+        "npm run test",
+        "npm run ascii-check",
+        "npm run lint"
+      ],
+      "owner_after": "Run npm run draft:demo three times. If Gemma ever produces a verified claim that is false, that is a verifier bug: report it, do not patch the prompt to hide it."
+    },
+    {
+      "id": "P4",
+      "name": "UI and recorded-run replay",
+      "minutes": 60,
+      "model": "gemini-flash",
+      "prompt": [
+        "Goal: the web UI per PRD section 7. Evidence panel is the visual centerpiece. Use the frontend-design approach: plain, readable, high contrast, no decorative motion.",
+        "1. API route POST /api/run takes { repoPath, model } and calls runPipeline. Restrict repoPath to an allow-list: the fixtures folder or a path the user types, but reject anything that is not an existing git repo. Return typed errors as JSON.",
+        "2. Page / : form (repo path default fixtures/demo-repo, model select primary or fallback, Run button, loading and error states). Draft left, evidence panel right, summary bar on top with status counts, model used, fallback flag, per-stage durations.",
+        "3. Each sentence is a chip with a text label VERIFIED, INTERPRETATION, or NEEDS INPUT plus a distinct style per status. Never rely on color alone. Clicking or keyboard-selecting a sentence shows its fact ids, values, evidence locations, and reason.",
+        "4. Export Markdown button: verified and interpretation sentences as text, each needs_input sentence as '[NEEDS INPUT: <reason>]'. Download client-side.",
+        "5. Page /replay renders public/demo-run.json with a permanent banner 'Recorded run, not live'. Add a button on / to save the current run to public/demo-run.json only via a dev-only script (npm run save-replay), not from the browser.",
+        "6. All visible text ASCII only. Add basic empty, error, and slow-model states. Keyboard accessible, visible focus.",
+        "7. Component tests for the sentence chips (status label present) and the export function (needs_input becomes a placeholder, never the original text).",
+        "Out of scope: editing the draft, auth, streaming, charts."
+      ],
+      "verify": [
+        "npm run dev   (leave running)",
+        "curl -s -X POST localhost:3000/api/run -H 'content-type: application/json' -d '{\"repoPath\":\"fixtures/demo-repo\",\"model\":\"primary\"}' | head -c 1500",
+        "curl -s -X POST localhost:3000/api/run -H 'content-type: application/json' -d '{\"repoPath\":\"/tmp/nope\",\"model\":\"primary\"}'",
+        "npm run test",
+        "npm run ascii-check",
+        "npm run lint",
+        "npm run build"
+      ],
+      "owner_after": "Screenshot-verify in the browser: run on the fixture, click the 60% sentence, confirm the NEEDS INPUT reason shows. Check /replay."
+    },
+    {
+      "id": "P5",
+      "name": "Sentry agent tracing, 5 spans, no payloads",
+      "minutes": 30,
+      "model": "gemini-flash",
+      "prompt": [
+        "Goal: Sentry spans in src/core/telemetry. Read the official Sentry Node.js Agent Tracing docs first (docs.sentry.io, platforms/javascript/guides/node/agent-tracing). Do not guess option names; quote the exact option you use to disable AI input and output capture in your report, with the doc URL.",
+        "1. Decide the right Sentry SDK package for a Next.js server runtime from the docs and state why in the report. Initialize only when SENTRY_DSN is non-empty. When empty, telemetry functions are no-ops and nothing is imported at runtime that makes a network call.",
+        "2. Wrap runPipeline stages in exactly five spans: sloth_scribe.scan, sloth_scribe.ledger, sloth_scribe.generate, sloth_scribe.verify, sloth_scribe.export (export span wraps the Markdown export function server-side or is emitted when export is called through an API route).",
+        "3. Span attributes allowed: model tag, durations, counts of facts and claims, per-status counts, error flag. Forbidden: repo text, commit subjects, ledger values, prompts, model output.",
+        "4. Turn off AI input and output capture exactly as the docs specify.",
+        "5. Test (vitest): use a fake transport or beforeSend capture, run the pipeline on the fixture with a mocked model, and assert that no ledger value, commit subject, claim text, or prompt text appears anywhere in captured events. Also assert exactly five sloth_scribe.* spans.",
+        "6. Add SENTRY_DSN handling to README setup notes (no real DSN committed).",
+        "Out of scope: Mastra, performance dashboards, session replay, browser-side Sentry."
+      ],
+      "verify": [
+        "npm run test",
+        "npm run draft:demo   (with SENTRY_DSN empty: must work, zero Sentry network calls)",
+        "grep -rn \"SENTRY_DSN\" src .env.example",
+        "npm run ascii-check",
+        "npm run lint",
+        "npm run build"
+      ],
+      "owner_after": "Add your real DSN to .env, run once, and screenshot the five spans in Sentry. If AI payloads show up in any span, stop and fix before continuing."
+    },
+    {
+      "id": "P6",
+      "name": "Demo hardening: offline, model swap, replay, README",
+      "minutes": 30,
+      "model": "gemini-flash",
+      "prompt": [
+        "Goal: make the demo reproducible and record measured numbers. No new features.",
+        "1. scripts/model-swap-check.ts: run the pipeline on fixtures/demo-repo once with MODEL_PRIMARY and once with MODEL_FALLBACK. Assert that the seeded claims (60% metric, dark mode, wrong count) are NEEDS_INPUT in both runs and that verified claims never include them. Print a table: model, wall time per stage, claim counts per status. Write both runs to runs/.",
+        "2. docs/OFFLINE_DEMO.md: exact manual steps to run with Wi-Fi off and SENTRY_DSN empty, and what to screenshot. Ascii only.",
+        "3. Add npm run save-replay: copies the chosen run JSON to public/demo-run.json (a real recorded run).",
+        "4. Fill README.md using the template provided: what it is, the wedge, quickstart (ollama pull, npm install, npm run fixture, npm run dev), verifier rules summary, privacy notes (exactly what leaves the process: nothing, except optional Sentry counts and timings), measured results table populated ONLY from runs/*.json, and the line 'Started Oct 23, 2026 (Week 3 window Oct 19-25).' Anything not measured is [NEEDS INPUT: ...].",
+        "5. Add a Known limitations section: verifier covers numbers, dates, counts, and named features only; adjectives and causality are interpretation; the hosted page is a recorded run.",
+        "Out of scope: deployment, new rules, UI redesign."
+      ],
+      "verify": [
+        "npm run fixture",
+        "npx tsx scripts/model-swap-check.ts",
+        "ls runs",
+        "npm run test",
+        "npm run ascii-check",
+        "npm run lint",
+        "npm run build"
+      ],
+      "owner_after": "Run the offline demo yourself, sample VRAM with nvidia-smi during a run, and record the numbers. Do the fresh-clone test in a new folder."
+    },
+    {
+      "id": "P7",
+      "name": "Deploy replay and write the post (with Claude in chat)",
+      "minutes": 60,
+      "model": "n/a",
+      "prompt": [
+        "Not an Antigravity phase. Deploy the recorded-run replay to Vercel on the .tech domain, then draft the DEV post in Claude chat using docs/POST_BRIEF.md and the measured runs."
+      ],
+      "verify": [
+        "Open the .tech URL on a phone: the replay page loads and shows the banner",
+        "Fresh clone test passes",
+        "Post has every [NEEDS INPUT] resolved or removed"
+      ]
+    }
+  ]
+}
