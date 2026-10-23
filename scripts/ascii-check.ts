@@ -56,6 +56,7 @@ function runAsciiCheck(): void {
 	const targets = [
 		'src',
 		'app',
+		'components',
 		'scripts',
 		'docs',
 		'README.md',

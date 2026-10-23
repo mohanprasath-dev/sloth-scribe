@@ -1,8 +1,5 @@
 /// <reference types="next" />
 /// <reference types="next/image-types/global" />
 
-declare namespace React {
-	type ReactNode = any;
-	type ComponentType<P = {}> = any;
-	type ReactElement<P = any, T = any> = any;
-}
+// NOTE: This file should not be edited
+// see https://nextjs.org/docs/app/building-your-application/configuring/typescript for more information.

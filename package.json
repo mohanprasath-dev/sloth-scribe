@@ -12,7 +12,8 @@
 		"fixture": "node scripts/run-fixture.js",
 		"ledger": "tsx scripts/ledger-cli.ts",
 		"verify:demo": "tsx scripts/verify-demo.ts",
-		"draft:demo": "tsx scripts/draft-demo.ts"
+		"draft:demo": "tsx scripts/draft-demo.ts",
+		"save-replay": "tsx scripts/save-replay.ts"
 	},
 	"dependencies": {
 		"@sentry/node": "^11.8.0",

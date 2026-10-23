@@ -1,0 +1,1002 @@
+{
+	"draft": {
+		"paragraphs": [
+			{
+				"claims": [
+					{
+						"claim_id": "F002",
+						"text": "There were 14 commits made.",
+						"type": "count",
+						"fact_ids": [
+							"F002"
+						]
+					},
+					{
+						"claim_id": "F003",
+						"text": "The first commit occurred on 2026-03-02.",
+						"type": "date",
+						"fact_ids": [
+							"F003"
+						]
+					},
+					{
+						"claim_id": "F004",
+						"text": "The last commit occurred on 2026-03-13.",
+						"type": "date",
+						"fact_ids": [
+							"F004"
+						]
+					},
+					{
+						"claim_id": "F005",
+						"text": "The initial project was created with package.json and README.",
+						"type": "feature",
+						"fact_ids": [
+							"F005"
+						]
+					},
+					{
+						"claim_id": "F044",
+						"text": "The README states that the build time was cut by 60% compared to the old pipeline.",
+						"type": "metric",
+						"fact_ids": [
+							"F044"
+						]
+					},
+					{
+						"claim_id": "F050",
+						"text": "The repository includes a feature for fast terminal task capture.",
+						"type": "feature",
+						"fact_ids": [
+							"F050"
+						]
+					},
+					{
+						"claim_id": "F051",
+						"text": "The repository includes CSV export for task lists.",
+						"type": "feature",
+						"fact_ids": [
+							"F051"
+						]
+					},
+					{
+						"claim_id": "F052",
+						"text": "The repository includes built-in dark mode support.",
+						"type": "feature",
+						"fact_ids": [
+							"F052"
+						]
+					},
+					{
+						"claim_id": "F053",
+						"text": "The repository includes schema validation with zod.",
+						"type": "feature",
+						"fact_ids": [
+							"F053"
+						]
+					},
+					{
+						"claim_id": "F041",
+						"text": "Commander (^12.0.0) is a dependency.",
+						"type": "dependency",
+						"fact_ids": [
+							"F041"
+						]
+					},
+					{
+						"claim_id": "F042",
+						"text": "Zod (^3.23.0) is a dependency.",
+						"type": "dependency",
+						"fact_ids": [
+							"F042"
+						]
+					},
+					{
+						"claim_id": "F043",
+						"text": "The test script uses node --test tests/*.test.js.",
+						"type": "dependency",
+						"fact_ids": [
+							"F043"
+						]
+					}
+				]
+			}
+		]
+	},
+	"claims": [
+		{
+			"claim_id": "F002",
+			"text": "There were 14 commits made.",
+			"type": "count",
+			"fact_ids": [
+				"F002"
+			]
+		},
+		{
+			"claim_id": "F003",
+			"text": "The first commit occurred on 2026-03-02.",
+			"type": "date",
+			"fact_ids": [
+				"F003"
+			]
+		},
+		{
+			"claim_id": "F004",
+			"text": "The last commit occurred on 2026-03-13.",
+			"type": "date",
+			"fact_ids": [
+				"F004"
+			]
+		},
+		{
+			"claim_id": "F005",
+			"text": "The initial project was created with package.json and README.",
+			"type": "feature",
+			"fact_ids": [
+				"F005"
+			]
+		},
+		{
+			"claim_id": "F044",
+			"text": "The README states that the build time was cut by 60% compared to the old pipeline.",
+			"type": "metric",
+			"fact_ids": [
+				"F044"
+			]
+		},
+		{
+			"claim_id": "F050",
+			"text": "The repository includes a feature for fast terminal task capture.",
+			"type": "feature",
+			"fact_ids": [
+				"F050"
+			]
+		},
+		{
+			"claim_id": "F051",
+			"text": "The repository includes CSV export for task lists.",
+			"type": "feature",
+			"fact_ids": [
+				"F051"
+			]
+		},
+		{
+			"claim_id": "F052",
+			"text": "The repository includes built-in dark mode support.",
+			"type": "feature",
+			"fact_ids": [
+				"F052"
+			]
+		},
+		{
+			"claim_id": "F053",
+			"text": "The repository includes schema validation with zod.",
+			"type": "feature",
+			"fact_ids": [
+				"F053"
+			]
+		},
+		{
+			"claim_id": "F041",
+			"text": "Commander (^12.0.0) is a dependency.",
+			"type": "dependency",
+			"fact_ids": [
+				"F041"
+			]
+		},
+		{
+			"claim_id": "F042",
+			"text": "Zod (^3.23.0) is a dependency.",
+			"type": "dependency",
+			"fact_ids": [
+				"F042"
+			]
+		},
+		{
+			"claim_id": "F043",
+			"text": "The test script uses node --test tests/*.test.js.",
+			"type": "dependency",
+			"fact_ids": [
+				"F043"
+			]
+		}
+	],
+	"verifiedClaims": [
+		{
+			"claim_id": "F002",
+			"text": "There were 14 commits made.",
+			"type": "count",
+			"fact_ids": [
+				"F002"
+			],
+			"status": "verified",
+			"reason": "verified commit count of 14",
+			"evidence": [
+				{
+					"fact_id": "F002",
+					"location": "git:log"
+				}
+			]
+		},
+		{
+			"claim_id": "F003",
+			"text": "The first commit occurred on 2026-03-02.",
+			"type": "date",
+			"fact_ids": [
+				"F003"
+			],
+			"status": "verified",
+			"reason": "verified commit dates 2026-03-02",
+			"evidence": [
+				{
+					"fact_id": "F003",
+					"location": "commit:ee29103"
+				}
+			]
+		},
+		{
+			"claim_id": "F004",
+			"text": "The last commit occurred on 2026-03-13.",
+			"type": "date",
+			"fact_ids": [
+				"F004"
+			],
+			"status": "verified",
+			"reason": "verified commit dates 2026-03-13",
+			"evidence": [
+				{
+					"fact_id": "F004",
+					"location": "commit:6bf5ff8"
+				}
+			]
+		},
+		{
+			"claim_id": "F005",
+			"text": "The initial project was created with package.json and README.",
+			"type": "feature",
+			"fact_ids": [
+				"F005"
+			],
+			"status": "needs_input",
+			"reason": "feature unproven: no supporting commit or file evidence cited",
+			"evidence": []
+		},
+		{
+			"claim_id": "F044",
+			"text": "The README states that the build time was cut by 60% compared to the old pipeline.",
+			"type": "metric",
+			"fact_ids": [
+				"F044"
+			],
+			"status": "needs_input",
+			"reason": "metric needs measured evidence",
+			"evidence": []
+		},
+		{
+			"claim_id": "F050",
+			"text": "The repository includes a feature for fast terminal task capture.",
+			"type": "feature",
+			"fact_ids": [
+				"F050"
+			],
+			"status": "needs_input",
+			"reason": "unproven feature: README text alone does not prove a feature",
+			"evidence": []
+		},
+		{
+			"claim_id": "F051",
+			"text": "The repository includes CSV export for task lists.",
+			"type": "feature",
+			"fact_ids": [
+				"F051"
+			],
+			"status": "needs_input",
+			"reason": "unproven feature: README text alone does not prove a feature",
+			"evidence": []
+		},
+		{
+			"claim_id": "F052",
+			"text": "The repository includes built-in dark mode support.",
+			"type": "feature",
+			"fact_ids": [
+				"F052"
+			],
+			"status": "needs_input",
+			"reason": "feature 'dark mode' unproven: README text alone does not prove a feature",
+			"evidence": []
+		},
+		{
+			"claim_id": "F053",
+			"text": "The repository includes schema validation with zod.",
+			"type": "feature",
+			"fact_ids": [
+				"F053"
+			],
+			"status": "needs_input",
+			"reason": "unproven feature: README text alone does not prove a feature",
+			"evidence": []
+		},
+		{
+			"claim_id": "F041",
+			"text": "Commander (^12.0.0) is a dependency.",
+			"type": "dependency",
+			"fact_ids": [
+				"F041"
+			],
+			"status": "needs_input",
+			"reason": "number not in cited facts",
+			"evidence": []
+		},
+		{
+			"claim_id": "F042",
+			"text": "Zod (^3.23.0) is a dependency.",
+			"type": "dependency",
+			"fact_ids": [
+				"F042"
+			],
+			"status": "needs_input",
+			"reason": "number not in cited facts",
+			"evidence": []
+		},
+		{
+			"claim_id": "F043",
+			"text": "The test script uses node --test tests/*.test.js.",
+			"type": "dependency",
+			"fact_ids": [
+				"F043"
+			],
+			"status": "needs_input",
+			"reason": "dependency 'node' not found in package.json",
+			"evidence": []
+		}
+	],
+	"ledger": [
+		{
+			"id": "F001",
+			"type": "repo_name",
+			"value": "tinytasks",
+			"source": "package.json",
+			"evidence_location": "file:package.json:2-2"
+		},
+		{
+			"id": "F002",
+			"type": "commit_total",
+			"value": 14,
+			"source": "git log",
+			"evidence_location": "git:log"
+		},
+		{
+			"id": "F003",
+			"type": "first_commit_date",
+			"value": "2026-03-02",
+			"source": "git log",
+			"evidence_location": "commit:ee29103"
+		},
+		{
+			"id": "F004",
+			"type": "last_commit_date",
+			"value": "2026-03-13",
+			"source": "git log",
+			"evidence_location": "commit:6bf5ff8"
+		},
+		{
+			"id": "F005",
+			"type": "commit",
+			"value": {
+				"hash": "ee29103",
+				"subject": "init project with package.json and README",
+				"date": "2026-03-02"
+			},
+			"source": "git log",
+			"evidence_location": "commit:ee29103"
+		},
+		{
+			"id": "F006",
+			"type": "commit",
+			"value": {
+				"hash": "b8e406e",
+				"subject": "add task store foundation",
+				"date": "2026-03-03"
+			},
+			"source": "git log",
+			"evidence_location": "commit:b8e406e"
+		},
+		{
+			"id": "F007",
+			"type": "commit",
+			"value": {
+				"hash": "875da98",
+				"subject": "add unit tests for task store",
+				"date": "2026-03-04"
+			},
+			"source": "git log",
+			"evidence_location": "commit:875da98"
+		},
+		{
+			"id": "F008",
+			"type": "commit",
+			"value": {
+				"hash": "d1d890a",
+				"subject": "create CLI entrypoint with commander",
+				"date": "2026-03-05"
+			},
+			"source": "git log",
+			"evidence_location": "commit:d1d890a"
+		},
+		{
+			"id": "F009",
+			"type": "commit",
+			"value": {
+				"hash": "731a53f",
+				"subject": "add formatting helper for output display",
+				"date": "2026-03-06"
+			},
+			"source": "git log",
+			"evidence_location": "commit:731a53f"
+		},
+		{
+			"id": "F010",
+			"type": "commit",
+			"value": {
+				"hash": "d38fde2",
+				"subject": "integrate task display formatting into CLI",
+				"date": "2026-03-07"
+			},
+			"source": "git log",
+			"evidence_location": "commit:d38fde2"
+		},
+		{
+			"id": "F011",
+			"type": "commit",
+			"value": {
+				"hash": "75a3fb7",
+				"subject": "add task validation schema using zod",
+				"date": "2026-03-08"
+			},
+			"source": "git log",
+			"evidence_location": "commit:75a3fb7"
+		},
+		{
+			"id": "F012",
+			"type": "commit",
+			"value": {
+				"hash": "a39ea2b",
+				"subject": "expand store test coverage for invalid inputs",
+				"date": "2026-03-09"
+			},
+			"source": "git log",
+			"evidence_location": "commit:a39ea2b"
+		},
+		{
+			"id": "F013",
+			"type": "commit",
+			"value": {
+				"hash": "cc4f592",
+				"subject": "implement CSV export for task lists",
+				"date": "2026-03-10"
+			},
+			"source": "git log",
+			"evidence_location": "commit:cc4f592"
+		},
+		{
+			"id": "F014",
+			"type": "commit",
+			"value": {
+				"hash": "b8ba509",
+				"subject": "wire CSV export option into CLI command",
+				"date": "2026-03-10"
+			},
+			"source": "git log",
+			"evidence_location": "commit:b8ba509"
+		},
+		{
+			"id": "F015",
+			"type": "commit",
+			"value": {
+				"hash": "ba98995",
+				"subject": "add unit tests for CSV export",
+				"date": "2026-03-11"
+			},
+			"source": "git log",
+			"evidence_location": "commit:ba98995"
+		},
+		{
+			"id": "F016",
+			"type": "commit",
+			"value": {
+				"hash": "bcada21",
+				"subject": "refactor output formatters for table borders",
+				"date": "2026-03-12"
+			},
+			"source": "git log",
+			"evidence_location": "commit:bcada21"
+		},
+		{
+			"id": "F017",
+			"type": "commit",
+			"value": {
+				"hash": "a256c64",
+				"subject": "improve store clear method and error handling",
+				"date": "2026-03-13"
+			},
+			"source": "git log",
+			"evidence_location": "commit:a256c64"
+		},
+		{
+			"id": "F018",
+			"type": "commit",
+			"value": {
+				"hash": "6bf5ff8",
+				"subject": "finalize CLI documentation and examples in README",
+				"date": "2026-03-13"
+			},
+			"source": "git log",
+			"evidence_location": "commit:6bf5ff8"
+		},
+		{
+			"id": "F019",
+			"type": "diffstat",
+			"value": {
+				"commit": "ee29103",
+				"files_changed": 2,
+				"insertions": 28,
+				"deletions": 0
+			},
+			"source": "git show",
+			"evidence_location": "commit:ee29103"
+		},
+		{
+			"id": "F020",
+			"type": "diffstat",
+			"value": {
+				"commit": "b8e406e",
+				"files_changed": 1,
+				"insertions": 18,
+				"deletions": 0
+			},
+			"source": "git show",
+			"evidence_location": "commit:b8e406e"
+		},
+		{
+			"id": "F021",
+			"type": "diffstat",
+			"value": {
+				"commit": "875da98",
+				"files_changed": 1,
+				"insertions": 12,
+				"deletions": 0
+			},
+			"source": "git show",
+			"evidence_location": "commit:875da98"
+		},
+		{
+			"id": "F022",
+			"type": "diffstat",
+			"value": {
+				"commit": "d1d890a",
+				"files_changed": 1,
+				"insertions": 12,
+				"deletions": 0
+			},
+			"source": "git show",
+			"evidence_location": "commit:d1d890a"
+		},
+		{
+			"id": "F023",
+			"type": "diffstat",
+			"value": {
+				"commit": "731a53f",
+				"files_changed": 1,
+				"insertions": 4,
+				"deletions": 0
+			},
+			"source": "git show",
+			"evidence_location": "commit:731a53f"
+		},
+		{
+			"id": "F024",
+			"type": "diffstat",
+			"value": {
+				"commit": "d38fde2",
+				"files_changed": 1,
+				"insertions": 18,
+				"deletions": 0
+			},
+			"source": "git show",
+			"evidence_location": "commit:d38fde2"
+		},
+		{
+			"id": "F025",
+			"type": "diffstat",
+			"value": {
+				"commit": "75a3fb7",
+				"files_changed": 1,
+				"insertions": 10,
+				"deletions": 2
+			},
+			"source": "git show",
+			"evidence_location": "commit:75a3fb7"
+		},
+		{
+			"id": "F026",
+			"type": "diffstat",
+			"value": {
+				"commit": "a39ea2b",
+				"files_changed": 1,
+				"insertions": 5,
+				"deletions": 0
+			},
+			"source": "git show",
+			"evidence_location": "commit:a39ea2b"
+		},
+		{
+			"id": "F027",
+			"type": "diffstat",
+			"value": {
+				"commit": "cc4f592",
+				"files_changed": 1,
+				"insertions": 5,
+				"deletions": 0
+			},
+			"source": "git show",
+			"evidence_location": "commit:cc4f592"
+		},
+		{
+			"id": "F028",
+			"type": "diffstat",
+			"value": {
+				"commit": "b8ba509",
+				"files_changed": 1,
+				"insertions": 11,
+				"deletions": 0
+			},
+			"source": "git show",
+			"evidence_location": "commit:b8ba509"
+		},
+		{
+			"id": "F029",
+			"type": "diffstat",
+			"value": {
+				"commit": "ba98995",
+				"files_changed": 1,
+				"insertions": 14,
+				"deletions": 0
+			},
+			"source": "git show",
+			"evidence_location": "commit:ba98995"
+		},
+		{
+			"id": "F030",
+			"type": "diffstat",
+			"value": {
+				"commit": "bcada21",
+				"files_changed": 1,
+				"insertions": 4,
+				"deletions": 0
+			},
+			"source": "git show",
+			"evidence_location": "commit:bcada21"
+		},
+		{
+			"id": "F031",
+			"type": "diffstat",
+			"value": {
+				"commit": "a256c64",
+				"files_changed": 1,
+				"insertions": 3,
+				"deletions": 0
+			},
+			"source": "git show",
+			"evidence_location": "commit:a256c64"
+		},
+		{
+			"id": "F032",
+			"type": "diffstat",
+			"value": {
+				"commit": "6bf5ff8",
+				"files_changed": 1,
+				"insertions": 8,
+				"deletions": 0
+			},
+			"source": "git show",
+			"evidence_location": "commit:6bf5ff8"
+		},
+		{
+			"id": "F033",
+			"type": "file",
+			"value": {
+				"path": "package.json",
+				"line_count": 13
+			},
+			"source": "git ls-files",
+			"evidence_location": "file:package.json:1-13"
+		},
+		{
+			"id": "F034",
+			"type": "file",
+			"value": {
+				"path": "README.md",
+				"line_count": 23
+			},
+			"source": "git ls-files",
+			"evidence_location": "file:README.md:1-23"
+		},
+		{
+			"id": "F035",
+			"type": "file",
+			"value": {
+				"path": "src/cli.js",
+				"line_count": 41
+			},
+			"source": "git ls-files",
+			"evidence_location": "file:src/cli.js:1-41"
+		},
+		{
+			"id": "F036",
+			"type": "file",
+			"value": {
+				"path": "src/export.js",
+				"line_count": 5
+			},
+			"source": "git ls-files",
+			"evidence_location": "file:src/export.js:1-5"
+		},
+		{
+			"id": "F037",
+			"type": "file",
+			"value": {
+				"path": "src/format.js",
+				"line_count": 8
+			},
+			"source": "git ls-files",
+			"evidence_location": "file:src/format.js:1-8"
+		},
+		{
+			"id": "F038",
+			"type": "file",
+			"value": {
+				"path": "src/store.js",
+				"line_count": 29
+			},
+			"source": "git ls-files",
+			"evidence_location": "file:src/store.js:1-29"
+		},
+		{
+			"id": "F039",
+			"type": "file",
+			"value": {
+				"path": "tests/export.test.js",
+				"line_count": 14
+			},
+			"source": "git ls-files",
+			"evidence_location": "file:tests/export.test.js:1-14"
+		},
+		{
+			"id": "F040",
+			"type": "file",
+			"value": {
+				"path": "tests/store.test.js",
+				"line_count": 17
+			},
+			"source": "git ls-files",
+			"evidence_location": "file:tests/store.test.js:1-17"
+		},
+		{
+			"id": "F041",
+			"type": "dependency",
+			"value": {
+				"name": "commander",
+				"version": "^12.0.0",
+				"location": "dependencies"
+			},
+			"source": "package.json",
+			"evidence_location": "file:package.json:10-10"
+		},
+		{
+			"id": "F042",
+			"type": "dependency",
+			"value": {
+				"name": "zod",
+				"version": "^3.23.0",
+				"location": "dependencies"
+			},
+			"source": "package.json",
+			"evidence_location": "file:package.json:11-11"
+		},
+		{
+			"id": "F043",
+			"type": "script",
+			"value": {
+				"name": "test",
+				"command": "node --test tests/*.test.js"
+			},
+			"source": "package.json",
+			"evidence_location": "file:package.json:7-7"
+		},
+		{
+			"id": "F044",
+			"type": "readme_line",
+			"value": {
+				"text": "# tinytasks",
+				"line": 1
+			},
+			"source": "README.md",
+			"evidence_location": "readme:1"
+		},
+		{
+			"id": "F045",
+			"type": "readme_line",
+			"value": {
+				"text": "Minimal task management command line utility.",
+				"line": 3
+			},
+			"source": "README.md",
+			"evidence_location": "readme:3"
+		},
+		{
+			"id": "F046",
+			"type": "readme_line",
+			"value": {
+				"text": "All commit history and dates (2026-03-02 through 2026-03-13) are synthetic.",
+				"line": 4
+			},
+			"source": "README.md",
+			"evidence_location": "readme:4"
+		},
+		{
+			"id": "F047",
+			"type": "readme_line",
+			"value": {
+				"text": "## Performance",
+				"line": 6
+			},
+			"source": "README.md",
+			"evidence_location": "readme:6"
+		},
+		{
+			"id": "F048",
+			"type": "readme_line",
+			"value": {
+				"text": "Cuts build time by 60% compared to the old pipeline.",
+				"line": 8
+			},
+			"source": "README.md",
+			"evidence_location": "readme:8"
+		},
+		{
+			"id": "F049",
+			"type": "readme_line",
+			"value": {
+				"text": "## Features",
+				"line": 10
+			},
+			"source": "README.md",
+			"evidence_location": "readme:10"
+		},
+		{
+			"id": "F050",
+			"type": "readme_line",
+			"value": {
+				"text": "- Fast terminal task capture",
+				"line": 12
+			},
+			"source": "README.md",
+			"evidence_location": "readme:12"
+		},
+		{
+			"id": "F051",
+			"type": "readme_line",
+			"value": {
+				"text": "- CSV export for task lists",
+				"line": 13
+			},
+			"source": "README.md",
+			"evidence_location": "readme:13"
+		},
+		{
+			"id": "F052",
+			"type": "readme_line",
+			"value": {
+				"text": "- Built-in dark mode support",
+				"line": 14
+			},
+			"source": "README.md",
+			"evidence_location": "readme:14"
+		},
+		{
+			"id": "F053",
+			"type": "readme_line",
+			"value": {
+				"text": "- Schema validation with zod",
+				"line": 15
+			},
+			"source": "README.md",
+			"evidence_location": "readme:15"
+		},
+		{
+			"id": "F054",
+			"type": "readme_line",
+			"value": {
+				"text": "## Usage",
+				"line": 17
+			},
+			"source": "README.md",
+			"evidence_location": "readme:17"
+		},
+		{
+			"id": "F055",
+			"type": "readme_line",
+			"value": {
+				"text": "```bash",
+				"line": 19
+			},
+			"source": "README.md",
+			"evidence_location": "readme:19"
+		},
+		{
+			"id": "F056",
+			"type": "readme_line",
+			"value": {
+				"text": "tinytasks add \"Review pull requests\"",
+				"line": 20
+			},
+			"source": "README.md",
+			"evidence_location": "readme:20"
+		},
+		{
+			"id": "F057",
+			"type": "readme_line",
+			"value": {
+				"text": "tinytasks list",
+				"line": 21
+			},
+			"source": "README.md",
+			"evidence_location": "readme:21"
+		},
+		{
+			"id": "F058",
+			"type": "readme_line",
+			"value": {
+				"text": "tinytasks export --format csv",
+				"line": 22
+			},
+			"source": "README.md",
+			"evidence_location": "readme:22"
+		},
+		{
+			"id": "F059",
+			"type": "readme_line",
+			"value": {
+				"text": "```",
+				"line": 23
+			},
+			"source": "README.md",
+			"evidence_location": "readme:23"
+		}
+	],
+	"runRecord": {
+		"timestamp": "2026-10-23T09:35:38.521Z",
+		"model": "gemma3:4b-it-q4_K_M",
+		"fallback_used": false,
+		"fallback_reason": null,
+		"timings": {
+			"scan": 132,
+			"ledger": 9,
+			"generate": 11383,
+			"verify": 3,
+			"total": 11527
+		},
+		"ollama": {
+			"prompt_eval_count": 1671,
+			"eval_count": 577,
+			"total_duration": 11336471200
+		},
+		"claim_counts": {
+			"verified": 3,
+			"interpretation": 0,
+			"needs_input": 9,
+			"total": 12
+		}
+	},
+	"recordPath": "C:\\Users\\mohan\\.gemini\\antigravity\\worktrees\\40ccc5f3-f7ba-4f80-a641-4eac35665eeb\\subagent-Phase-P4-Builder-self-315d9df4\\runs\\2026-10-23T09-35-38.521Z-gemma3-4b-it-q4_K_M.json"
+}
