@@ -15,6 +15,7 @@
 		"draft:demo": "tsx scripts/draft-demo.ts"
 	},
 	"dependencies": {
+		"@sentry/node": "^11.8.0",
 		"next": "^14.2.15",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1",

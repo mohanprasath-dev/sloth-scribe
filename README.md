@@ -26,6 +26,17 @@ npm run dev           # UI at http://localhost:3000
 ```
 Requires Ollama 0.6 or later.
 
+### Environment and Telemetry Setup
+Copy `.env.example` to `.env`:
+```bash
+cp .env.example .env
+```
+- By default, `SENTRY_DSN` is empty. When empty, telemetry functions are no-ops and zero network calls are made.
+- To enable agent tracing, set `SENTRY_DSN` in `.env` to your Sentry project DSN (never commit real DSN keys).
+- AI input and output capture is turned off per official Sentry Node Agent Tracing docs (`dataCollection.genAI.inputs = false` and `dataCollection.genAI.outputs = false`).
+- Exactly five spans are recorded per run (`sloth_scribe.scan`, `sloth_scribe.ledger`, `sloth_scribe.generate`, `sloth_scribe.verify`, `sloth_scribe.export`).
+- Only counts, durations, and model tags are sent. Repo text, commit subjects, ledger values, prompts, and model output are never transmitted.
+
 ## Verifier rules (v1)
 - R1 Numbers and dates must equal a cited fact.
 - R2 Counts come from git, not README text.
