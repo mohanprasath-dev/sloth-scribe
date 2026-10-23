@@ -1,3 +1,13 @@
 {
-	"extends": ["next/core-web-vitals"]
+	"root": true,
+	"parser": "next/dist/compiled/babel/eslint-parser",
+	"parserOptions": {
+		"requireConfigFile": false,
+		"babelOptions": {
+			"presets": [
+				"next/dist/compiled/babel/preset-react",
+				"next/dist/compiled/babel/preset-typescript"
+			]
+		}
+	}
 }
