@@ -38,18 +38,17 @@ export function initTelemetry(options?: TelemetryInitOptions): boolean {
 				outputs: false,
 			},
 		},
-		sendDefaultPii: false,
 		beforeSendSpan: (span) => {
 			if (!span.name || !span.name.startsWith('sloth_scribe.')) {
-				return null;
+				return null as any;
 			}
 			if (options?.beforeSendSpan) {
-				return options.beforeSendSpan(span) as Sentry.SpanJSON | null;
+				return options.beforeSendSpan(span) as any;
 			}
 			return span;
 		},
 		beforeSend: () => null,
-		...(options?.transport ? { transport: options.transport as Sentry.ClientOptions['transport'] } : {}),
+		...(options?.transport ? { transport: options.transport as unknown as Sentry.NodeOptions['transport'] } : {}),
 	});
 
 	isInitialized = true;
