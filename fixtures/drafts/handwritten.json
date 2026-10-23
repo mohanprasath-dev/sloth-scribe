@@ -1,0 +1,94 @@
+[
+	{
+		"claim_id": "c01",
+		"text": "The repository contains a total of 14 commits.",
+		"type": "count",
+		"fact_ids": [
+			"F002"
+		]
+	},
+	{
+		"claim_id": "c02",
+		"text": "The repository contains a total of 13 commits.",
+		"type": "count",
+		"fact_ids": [
+			"F002"
+		]
+	},
+	{
+		"claim_id": "c03",
+		"text": "Development history spans from 2026-03-02 to 2026-03-13.",
+		"type": "date",
+		"fact_ids": [
+			"F003",
+			"F004"
+		]
+	},
+	{
+		"claim_id": "c04",
+		"text": "The project uses `commander` for command-line parsing.",
+		"type": "dependency",
+		"fact_ids": [
+			"F041"
+		]
+	},
+	{
+		"claim_id": "c05",
+		"text": "The project relies on `express` for web routing.",
+		"type": "dependency",
+		"fact_ids": [
+			"F041"
+		]
+	},
+	{
+		"claim_id": "c06",
+		"text": "Implemented CSV export for task lists in `src/export.js`.",
+		"type": "feature",
+		"fact_ids": [
+			"F013",
+			"F036"
+		]
+	},
+	{
+		"claim_id": "c07",
+		"text": "The application features built-in dark mode support.",
+		"type": "feature",
+		"fact_ids": [
+			"F052"
+		]
+	},
+	{
+		"claim_id": "c08",
+		"text": "Cuts build time by 60% compared to the old pipeline.",
+		"type": "metric",
+		"fact_ids": [
+			"F048"
+		]
+	},
+	{
+		"claim_id": "c09",
+		"text": "The codebase demonstrates clean modular separation and strong test hygiene.",
+		"type": "interpretation",
+		"fact_ids": []
+	},
+	{
+		"claim_id": "c10",
+		"text": "The team achieved excellent productivity across all 14 sprints.",
+		"type": "interpretation",
+		"fact_ids": []
+	},
+	{
+		"claim_id": "c11",
+		"text": "Task storage supports atomic operations.",
+		"type": "feature",
+		"fact_ids": []
+	},
+	{
+		"claim_id": "c12",
+		"text": "A secondary configuration loader is available.",
+		"type": "feature",
+		"fact_ids": [
+			"F999"
+		]
+	}
+]

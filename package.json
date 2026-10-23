@@ -11,7 +11,7 @@
 		"ascii-check": "tsx scripts/ascii-check.ts",
 		"fixture": "node scripts/run-fixture.js",
 		"ledger": "tsx scripts/ledger-cli.ts",
-		"verify:demo": "node scripts/not-implemented.js",
+		"verify:demo": "tsx scripts/verify-demo.ts",
 		"draft:demo": "node scripts/not-implemented.js"
 	},
 	"dependencies": {
