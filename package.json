@@ -12,7 +12,7 @@
 		"fixture": "node scripts/run-fixture.js",
 		"ledger": "tsx scripts/ledger-cli.ts",
 		"verify:demo": "tsx scripts/verify-demo.ts",
-		"draft:demo": "node scripts/not-implemented.js"
+		"draft:demo": "tsx scripts/draft-demo.ts"
 	},
 	"dependencies": {
 		"next": "^14.2.15",
