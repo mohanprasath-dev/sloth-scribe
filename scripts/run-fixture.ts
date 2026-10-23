@@ -1,0 +1,44 @@
+import { spawnSync } from 'node:child_process';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+function findBash(): string {
+	if (process.platform === 'win32') {
+		const candidates = [
+			'C:\\Program Files\\Git\\bin\\bash.exe',
+			'C:\\Program Files\\Git\\usr\\bin\\bash.exe',
+			'C:\\Program Files (x86)\\Git\\bin\\bash.exe',
+			'C:\\Program Files (x86)\\Git\\usr\\bin\\bash.exe',
+		];
+		for (const candidate of candidates) {
+			if (fs.existsSync(candidate)) {
+				return candidate;
+			}
+		}
+	}
+	return 'bash';
+}
+
+function runFixture(): void {
+	const bashPath = findBash();
+	const scriptPath = path.resolve(__dirname, 'make-fixture.sh');
+	const rootDir = path.resolve(__dirname, '..');
+
+	const result = spawnSync(bashPath, [scriptPath], {
+		stdio: 'inherit',
+		cwd: rootDir,
+	});
+
+	if (result.error) {
+		console.error('Failed to run make-fixture.sh:', result.error);
+		process.exit(1);
+	}
+
+	process.exit(result.status ?? 0);
+}
+
+runFixture();

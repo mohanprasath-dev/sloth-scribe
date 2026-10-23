@@ -147,3 +147,9 @@ vite.config.ts.timestamp-*
 
 # Turbo Repo
 .turbo
+
+# sloth-scribe
+.env
+fixtures/demo-repo/
+runs/
+!public/demo-run.json
