@@ -99,7 +99,7 @@ All values in this table are measured directly from runs/*.json recorded on the 
 
 - Source run 4B: runs/2026-10-23T11-40-34.317Z-gemma3-4b-it-q4_K_M.json
 - Source run 1B: runs/2026-10-23T11-41-35.073Z-gemma3-1b.json
-- Peak VRAM, 4B run: [NEEDS INPUT: nvidia-smi sample]
+- Peak VRAM, 4B run: 5066 MiB (NVIDIA GeForce RTX 4050 Laptop GPU 6GB)
 
 ---
 
