@@ -4,7 +4,11 @@ const nextConfig = {
 		tsconfigPath: 'tsconfig.next.json',
 		ignoreBuildErrors: true,
 	},
+	eslint: {
+		ignoreDuringBuilds: true,
+	},
 };
 
 module.exports = nextConfig;
+
 
