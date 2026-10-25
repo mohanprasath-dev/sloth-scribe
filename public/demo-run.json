@@ -4,7 +4,15 @@
 			{
 				"claims": [
 					{
-						"claim_id": "F002",
+						"claim_id": "c1",
+						"text": "The repository name is tinytasks.",
+						"type": "count",
+						"fact_ids": [
+							"F001"
+						]
+					},
+					{
+						"claim_id": "c2",
 						"text": "There were 14 commits made.",
 						"type": "count",
 						"fact_ids": [
@@ -12,23 +20,23 @@
 						]
 					},
 					{
-						"claim_id": "F003",
-						"text": "The first commit occurred on 2026-03-02.",
+						"claim_id": "c3",
+						"text": "The first commit date was 2026-03-02.",
 						"type": "date",
 						"fact_ids": [
 							"F003"
 						]
 					},
 					{
-						"claim_id": "F004",
-						"text": "The last commit occurred on 2026-03-13.",
+						"claim_id": "c4",
+						"text": "The last commit date was 2026-03-13.",
 						"type": "date",
 						"fact_ids": [
 							"F004"
 						]
 					},
 					{
-						"claim_id": "F005",
+						"claim_id": "c5",
 						"text": "The initial project was created with package.json and README.",
 						"type": "feature",
 						"fact_ids": [
@@ -36,67 +44,60 @@
 						]
 					},
 					{
-						"claim_id": "F044",
-						"text": "The README states that the build time was cut by 60% compared to the old pipeline.",
-						"type": "metric",
-						"fact_ids": [
-							"F044"
-						]
-					},
-					{
-						"claim_id": "F050",
-						"text": "The repository includes fast terminal task capture.",
+						"claim_id": "c6",
+						"text": "CSV export for task lists was implemented.",
 						"type": "feature",
 						"fact_ids": [
-							"F050"
+							"F013"
 						]
 					},
 					{
-						"claim_id": "F051",
-						"text": "The repository includes CSV export for task lists.",
+						"claim_id": "c7",
+						"text": "The CLI documentation and examples were finalized in the README.",
 						"type": "feature",
 						"fact_ids": [
-							"F051"
+							"F018"
 						]
 					},
 					{
-						"claim_id": "F052",
-						"text": "The repository includes built-in dark mode support.",
-						"type": "feature",
-						"fact_ids": [
-							"F052"
-						]
-					},
-					{
-						"claim_id": "F053",
-						"text": "The repository includes schema validation with zod.",
-						"type": "feature",
-						"fact_ids": [
-							"F053"
-						]
-					},
-					{
-						"claim_id": "F041",
-						"text": "Commander (^12.0.0) is a dependency.",
+						"claim_id": "c8",
+						"text": "Commander (^12.0.0) and Zod (^3.23.0) are dependencies.",
 						"type": "dependency",
 						"fact_ids": [
-							"F041"
-						]
-					},
-					{
-						"claim_id": "F042",
-						"text": "Zod (^3.23.0) is a dependency.",
-						"type": "dependency",
-						"fact_ids": [
+							"F041",
 							"F042"
 						]
 					},
 					{
-						"claim_id": "F043",
-						"text": "The test script is 'node --test tests/*.test.js'.",
-						"type": "dependency",
+						"claim_id": "c9",
+						"text": "The test script is node --test tests/*.test.js.",
+						"type": "script",
 						"fact_ids": [
 							"F043"
+						]
+					},
+					{
+						"claim_id": "c10",
+						"text": "The README says cuts build time by 60% compared to the old pipeline.",
+						"type": "metric",
+						"fact_ids": [
+							"F048"
+						]
+					},
+					{
+						"claim_id": "c11",
+						"text": "Minimal task management command line utility.",
+						"type": "interpretation",
+						"fact_ids": [
+							"F045"
+						]
+					},
+					{
+						"claim_id": "c12",
+						"text": "Fast terminal task capture.",
+						"type": "interpretation",
+						"fact_ids": [
+							"F050"
 						]
 					}
 				]
@@ -105,7 +106,15 @@
 	},
 	"claims": [
 		{
-			"claim_id": "F002",
+			"claim_id": "c1",
+			"text": "The repository name is tinytasks.",
+			"type": "count",
+			"fact_ids": [
+				"F001"
+			]
+		},
+		{
+			"claim_id": "c2",
 			"text": "There were 14 commits made.",
 			"type": "count",
 			"fact_ids": [
@@ -113,23 +122,23 @@
 			]
 		},
 		{
-			"claim_id": "F003",
-			"text": "The first commit occurred on 2026-03-02.",
+			"claim_id": "c3",
+			"text": "The first commit date was 2026-03-02.",
 			"type": "date",
 			"fact_ids": [
 				"F003"
 			]
 		},
 		{
-			"claim_id": "F004",
-			"text": "The last commit occurred on 2026-03-13.",
+			"claim_id": "c4",
+			"text": "The last commit date was 2026-03-13.",
 			"type": "date",
 			"fact_ids": [
 				"F004"
 			]
 		},
 		{
-			"claim_id": "F005",
+			"claim_id": "c5",
 			"text": "The initial project was created with package.json and README.",
 			"type": "feature",
 			"fact_ids": [
@@ -137,73 +146,77 @@
 			]
 		},
 		{
-			"claim_id": "F044",
-			"text": "The README states that the build time was cut by 60% compared to the old pipeline.",
-			"type": "metric",
-			"fact_ids": [
-				"F044"
-			]
-		},
-		{
-			"claim_id": "F050",
-			"text": "The repository includes fast terminal task capture.",
+			"claim_id": "c6",
+			"text": "CSV export for task lists was implemented.",
 			"type": "feature",
 			"fact_ids": [
-				"F050"
+				"F013"
 			]
 		},
 		{
-			"claim_id": "F051",
-			"text": "The repository includes CSV export for task lists.",
+			"claim_id": "c7",
+			"text": "The CLI documentation and examples were finalized in the README.",
 			"type": "feature",
 			"fact_ids": [
-				"F051"
+				"F018"
 			]
 		},
 		{
-			"claim_id": "F052",
-			"text": "The repository includes built-in dark mode support.",
-			"type": "feature",
-			"fact_ids": [
-				"F052"
-			]
-		},
-		{
-			"claim_id": "F053",
-			"text": "The repository includes schema validation with zod.",
-			"type": "feature",
-			"fact_ids": [
-				"F053"
-			]
-		},
-		{
-			"claim_id": "F041",
-			"text": "Commander (^12.0.0) is a dependency.",
+			"claim_id": "c8",
+			"text": "Commander (^12.0.0) and Zod (^3.23.0) are dependencies.",
 			"type": "dependency",
 			"fact_ids": [
-				"F041"
-			]
-		},
-		{
-			"claim_id": "F042",
-			"text": "Zod (^3.23.0) is a dependency.",
-			"type": "dependency",
-			"fact_ids": [
+				"F041",
 				"F042"
 			]
 		},
 		{
-			"claim_id": "F043",
-			"text": "The test script is 'node --test tests/*.test.js'.",
-			"type": "dependency",
+			"claim_id": "c9",
+			"text": "The test script is node --test tests/*.test.js.",
+			"type": "script",
 			"fact_ids": [
 				"F043"
+			]
+		},
+		{
+			"claim_id": "c10",
+			"text": "The README says cuts build time by 60% compared to the old pipeline.",
+			"type": "metric",
+			"fact_ids": [
+				"F048"
+			]
+		},
+		{
+			"claim_id": "c11",
+			"text": "Minimal task management command line utility.",
+			"type": "interpretation",
+			"fact_ids": [
+				"F045"
+			]
+		},
+		{
+			"claim_id": "c12",
+			"text": "Fast terminal task capture.",
+			"type": "interpretation",
+			"fact_ids": [
+				"F050"
 			]
 		}
 	],
 	"verifiedClaims": [
 		{
-			"claim_id": "F002",
+			"claim_id": "c1",
+			"text": "The repository name is tinytasks.",
+			"type": "count",
+			"fact_ids": [
+				"F001"
+			],
+			"status": "needs_input",
+			"reason": "contradicted by F002 (value 14)",
+			"evidence": []
+		},
+		{
+			"claim_id": "c2",
 			"text": "There were 14 commits made.",
 			"type": "count",
 			"fact_ids": [
@@ -219,8 +232,8 @@
 			]
 		},
 		{
-			"claim_id": "F003",
-			"text": "The first commit occurred on 2026-03-02.",
+			"claim_id": "c3",
+			"text": "The first commit date was 2026-03-02.",
 			"type": "date",
 			"fact_ids": [
 				"F003"
@@ -235,8 +248,8 @@
 			]
 		},
 		{
-			"claim_id": "F004",
-			"text": "The last commit occurred on 2026-03-13.",
+			"claim_id": "c4",
+			"text": "The last commit date was 2026-03-13.",
 			"type": "date",
 			"fact_ids": [
 				"F004"
@@ -251,7 +264,7 @@
 			]
 		},
 		{
-			"claim_id": "F005",
+			"claim_id": "c5",
 			"text": "The initial project was created with package.json and README.",
 			"type": "feature",
 			"fact_ids": [
@@ -262,92 +275,118 @@
 			"evidence": []
 		},
 		{
-			"claim_id": "F044",
-			"text": "The README states that the build time was cut by 60% compared to the old pipeline.",
+			"claim_id": "c6",
+			"text": "CSV export for task lists was implemented.",
+			"type": "feature",
+			"fact_ids": [
+				"F013"
+			],
+			"status": "verified",
+			"reason": "feature verified by commit cc4f592 and file src/export.js",
+			"evidence": [
+				{
+					"fact_id": "F013",
+					"location": "commit:cc4f592"
+				},
+				{
+					"fact_id": "F014",
+					"location": "commit:b8ba509"
+				},
+				{
+					"fact_id": "F015",
+					"location": "commit:ba98995"
+				},
+				{
+					"fact_id": "F036",
+					"location": "file:src/export.js:1-5"
+				},
+				{
+					"fact_id": "F039",
+					"location": "file:tests/export.test.js:1-14"
+				}
+			]
+		},
+		{
+			"claim_id": "c7",
+			"text": "The CLI documentation and examples were finalized in the README.",
+			"type": "feature",
+			"fact_ids": [
+				"F018"
+			],
+			"status": "needs_input",
+			"reason": "feature unproven: no supporting commit or file evidence cited",
+			"evidence": []
+		},
+		{
+			"claim_id": "c8",
+			"text": "Commander (^12.0.0) and Zod (^3.23.0) are dependencies.",
+			"type": "dependency",
+			"fact_ids": [
+				"F041",
+				"F042"
+			],
+			"status": "verified",
+			"reason": "verified dependency 'commander' in package.json",
+			"evidence": [
+				{
+					"fact_id": "F041",
+					"location": "file:package.json:10-10"
+				}
+			]
+		},
+		{
+			"claim_id": "c9",
+			"text": "The test script is node --test tests/*.test.js.",
+			"type": "script",
+			"fact_ids": [
+				"F043"
+			],
+			"status": "needs_input",
+			"reason": "script 'test' quoted command could not be identified",
+			"evidence": []
+		},
+		{
+			"claim_id": "c10",
+			"text": "The README says cuts build time by 60% compared to the old pipeline.",
 			"type": "metric",
 			"fact_ids": [
-				"F044"
+				"F048"
 			],
 			"status": "needs_input",
 			"reason": "metric needs measured evidence",
 			"evidence": []
 		},
 		{
-			"claim_id": "F050",
-			"text": "The repository includes fast terminal task capture.",
-			"type": "feature",
+			"claim_id": "c11",
+			"text": "Minimal task management command line utility.",
+			"type": "interpretation",
+			"fact_ids": [
+				"F045"
+			],
+			"status": "interpretation",
+			"reason": "interpretation with no numerals, dates, paths, or identifiers",
+			"evidence": [
+				{
+					"fact_id": "F045",
+					"location": "readme:3"
+				}
+			]
+		},
+		{
+			"claim_id": "c12",
+			"text": "Fast terminal task capture.",
+			"type": "interpretation",
 			"fact_ids": [
 				"F050"
 			],
-			"status": "needs_input",
-			"reason": "unproven feature: README text alone does not prove a feature",
-			"evidence": []
-		},
-		{
-			"claim_id": "F051",
-			"text": "The repository includes CSV export for task lists.",
-			"type": "feature",
-			"fact_ids": [
-				"F051"
-			],
-			"status": "needs_input",
-			"reason": "unproven feature: README text alone does not prove a feature",
-			"evidence": []
-		},
-		{
-			"claim_id": "F052",
-			"text": "The repository includes built-in dark mode support.",
-			"type": "feature",
-			"fact_ids": [
-				"F052"
-			],
-			"status": "needs_input",
-			"reason": "feature 'dark mode' unproven: README text alone does not prove a feature",
-			"evidence": []
-		},
-		{
-			"claim_id": "F053",
-			"text": "The repository includes schema validation with zod.",
-			"type": "feature",
-			"fact_ids": [
-				"F053"
-			],
-			"status": "needs_input",
-			"reason": "unproven feature: README text alone does not prove a feature",
-			"evidence": []
-		},
-		{
-			"claim_id": "F041",
-			"text": "Commander (^12.0.0) is a dependency.",
-			"type": "dependency",
-			"fact_ids": [
-				"F041"
-			],
-			"status": "needs_input",
-			"reason": "number not in cited facts",
-			"evidence": []
-		},
-		{
-			"claim_id": "F042",
-			"text": "Zod (^3.23.0) is a dependency.",
-			"type": "dependency",
-			"fact_ids": [
-				"F042"
-			],
-			"status": "needs_input",
-			"reason": "number not in cited facts",
-			"evidence": []
-		},
-		{
-			"claim_id": "F043",
-			"text": "The test script is 'node --test tests/*.test.js'.",
-			"type": "dependency",
-			"fact_ids": [
-				"F043"
-			],
-			"status": "needs_input",
-			"reason": "dependency name could not be identified",
-			"evidence": []
+			"status": "interpretation",
+			"reason": "interpretation with no numerals, dates, paths, or identifiers",
+			"evidence": [
+				{
+					"fact_id": "F050",
+					"location": "readme:12"
+				}
+			]
 		}
 	],
 	"ledger": [
@@ -975,29 +1014,29 @@
 		}
 	],
 	"runRecord": {
-		"timestamp": "2026-10-23T11:42:39.231Z",
+		"timestamp": "2026-10-25T18:00:12.984Z",
 		"model": "gemma3:4b-it-q4_K_M",
 		"fallback_used": false,
 		"fallback_reason": null,
 		"timings": {
-			"scan": 106,
+			"scan": 97,
 			"ledger": 8,
-			"generate": 14676,
-			"verify": 3,
-			"total": 14793
+			"generate": 10777,
+			"verify": 4,
+			"total": 10886
 		},
 		"ollama": {
-			"prompt_eval_count": 1671,
-			"eval_count": 576,
-			"total_duration": 14635931800
+			"prompt_eval_count": 1746,
+			"eval_count": 556,
+			"total_duration": 10741197200
 		},
 		"claim_counts": {
-			"verified": 3,
-			"interpretation": 0,
-			"needs_input": 9,
+			"verified": 5,
+			"interpretation": 2,
+			"needs_input": 5,
 			"total": 12
 		}
 	},
-	"recordPath": "D:\\Hackathons\\Hacktoberfest\\sloth-scribe\\runs\\2026-10-23T11-42-39.231Z-gemma3-4b-it-q4_K_M.json",
-	"markdown": "There were 14 commits made. The first commit occurred on 2026-03-02. The last commit occurred on 2026-03-13. [NEEDS INPUT: feature unproven: no supporting commit or file evidence cited] [NEEDS INPUT: metric needs measured evidence] [NEEDS INPUT: unproven feature: README text alone does not prove a feature] [NEEDS INPUT: unproven feature: README text alone does not prove a feature] [NEEDS INPUT: feature 'dark mode' unproven: README text alone does not prove a feature] [NEEDS INPUT: unproven feature: README text alone does not prove a feature] [NEEDS INPUT: number not in cited facts] [NEEDS INPUT: number not in cited facts] [NEEDS INPUT: dependency name could not be identified]"
+	"recordPath": "D:\\Hackathons\\Hacktoberfest\\sloth-scribe\\runs\\2026-10-25T18-00-12.984Z-gemma3-4b-it-q4_K_M.json",
+	"markdown": "[NEEDS INPUT: contradicted by F002 (value 14)] There were 14 commits made. The first commit date was 2026-03-02. The last commit date was 2026-03-13. [NEEDS INPUT: feature unproven: no supporting commit or file evidence cited] CSV export for task lists was implemented. [NEEDS INPUT: feature unproven: no supporting commit or file evidence cited] Commander (^12.0.0) and Zod (^3.23.0) are dependencies. [NEEDS INPUT: script 'test' quoted command could not be identified] [NEEDS INPUT: metric needs measured evidence] Minimal task management command line utility. Fast terminal task capture."
 }
