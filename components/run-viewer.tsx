@@ -85,12 +85,13 @@ export function RunViewer({
 									const isSelected =
 										selectedClaim?.claim_id === verified.claim_id;
 									return (
-										<SentenceChip
-											key={verified.claim_id}
-											claim={verified}
-											isSelected={isSelected}
-											onSelect={onSelectClaim}
-										/>
+										<React.Fragment key={verified.claim_id}>
+											<SentenceChip
+												claim={verified}
+												isSelected={isSelected}
+												onSelect={onSelectClaim}
+											/>{' '}
+										</React.Fragment>
 									);
 								})}
 							</p>

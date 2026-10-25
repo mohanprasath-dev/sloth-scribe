@@ -5,6 +5,7 @@ export const claimTypeSchema = z.enum([
 	'date',
 	'feature',
 	'dependency',
+	'script',
 	'metric',
 	'interpretation',
 ]);
@@ -16,6 +17,7 @@ export const claimSchema = z.object({
 	text: z.string().min(1),
 	type: claimTypeSchema,
 	fact_ids: z.array(z.string()),
+	subject: z.string().optional(),
 });
 
 export type Claim = z.infer<typeof claimSchema>;
@@ -43,6 +45,7 @@ export const verifiedClaimSchema = z.object({
 	status: verifiedStatusSchema,
 	reason: z.string(),
 	evidence: z.array(evidenceItemSchema),
+	subject: z.string().optional(),
 });
 
 export type VerifiedClaim = z.infer<typeof verifiedClaimSchema>;

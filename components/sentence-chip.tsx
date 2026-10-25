@@ -45,14 +45,14 @@ export function SentenceChip({ claim, isSelected, onSelect }: SentenceChipProps)
 			aria-pressed={isSelected}
 			onClick={() => onSelect(claim)}
 			onKeyDown={handleKeyDown}
-			className={`inline-flex flex-wrap items-baseline gap-1.5 p-1.5 m-1 rounded cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${containerStyle} ${selectedStyle}`}
+			className={`inline-flex flex-wrap items-baseline gap-1.5 p-1.5 m-1 mr-2 rounded cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${containerStyle} ${selectedStyle}`}
 		>
 			<span
 				data-testid="status-label"
-				className={`text-xs font-bold font-mono px-1 py-0.5 rounded tracking-wide ${badgeStyle}`}
+				className={`text-xs font-bold font-mono px-1 py-0.5 rounded tracking-wide mr-1.5 ${badgeStyle}`}
 			>
 				{statusLabel}
-			</span>
+			</span>{' '}
 			<span className="text-sm font-normal leading-relaxed">{claim.text}</span>
 		</span>
 	);

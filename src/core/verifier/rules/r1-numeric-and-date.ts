@@ -1,5 +1,6 @@
 import {
 	CommitValue,
+	DependencyValue,
 	DiffstatValue,
 	Fact,
 	FileValue,
@@ -7,7 +8,7 @@ import {
 } from '../../ledger/types';
 import { Claim, EvidenceItem, RuleResult } from '../types';
 
-function normalizeDate(raw: string): string {
+export function normalizeDate(raw: string): string {
 	const parts = raw.split(/[-/.]/);
 	if (parts.length === 3) {
 		const year = parts[0].padStart(4, '0');
@@ -18,7 +19,7 @@ function normalizeDate(raw: string): string {
 	return raw;
 }
 
-function extractDates(text: string): string[] {
+export function extractDates(text: string): string[] {
 	const matches = text.match(/\b\d{4}[-/.]\d{1,2}[-/.]\d{1,2}\b/g);
 	if (!matches) {
 		return [];
@@ -26,12 +27,45 @@ function extractDates(text: string): string[] {
 	return matches.map(normalizeDate);
 }
 
-function extractNumerals(text: string, dates: string[]): number[] {
+export function normalizeVersion(raw: string): string {
+	return raw.trim().replace(/^[\^~]/, '').replace(/^v/i, '');
+}
+
+export function extractVersions(text: string): string[] {
+	const matches = text.match(
+		/(?:version\s+)?`?([~^vV]?\d+\.\d+(?:\.\d+)?(?:-[0-9A-Za-z.-]+)?)`?(?=$|[\s`"')\].,;])/gi
+	);
+	if (!matches) {
+		return [];
+	}
+	const results: string[] = [];
+	for (const m of matches) {
+		const cleaned = m.replace(/^version\s+/i, '').replace(/`/g, '').trim();
+		if (
+			cleaned &&
+			!cleaned.endsWith('ms') &&
+			!cleaned.endsWith('s') &&
+			!cleaned.endsWith('%') &&
+			!cleaned.endsWith('x')
+		) {
+			results.push(cleaned);
+		}
+	}
+	return results;
+}
+
+function extractNumerals(
+	text: string,
+	dates: string[],
+	versions: string[]
+): number[] {
 	let cleanText = text;
 	for (const d of dates) {
 		cleanText = cleanText.split(d).join(' ');
 	}
-	// Also remove version-like patterns or date fragments if any
+	for (const v of versions) {
+		cleanText = cleanText.split(v).join(' ');
+	}
 	const matches = cleanText.match(/\b\d+(?:\.\d+)?\b/g);
 	if (!matches) {
 		return [];
@@ -82,16 +116,43 @@ export function ruleR1NumericAndDateEquality(
 	ledger: Fact[]
 ): RuleResult {
 	const dates = extractDates(claim.text);
-	const numerals = extractNumerals(claim.text, dates);
+	let cleanForVersions = claim.text;
+	for (const d of dates) {
+		cleanForVersions = cleanForVersions.split(d).join(' ');
+	}
+	const versions = extractVersions(cleanForVersions);
+	const numerals = extractNumerals(claim.text, dates, versions);
+
+	const citedFacts = ledger.filter((f) => claim.fact_ids.includes(f.id));
+
+	// 1. Check dependency versions if any
+	const citedDepFacts = citedFacts.filter((f) => f.type === 'dependency');
+	if (versions.length > 0 && citedDepFacts.length > 0) {
+		for (const ver of versions) {
+			const normVer = normalizeVersion(ver);
+			const matchingDep = citedDepFacts.find(
+				(df) =>
+					normalizeVersion((df.value as DependencyValue).version) === normVer
+			);
+			if (!matchingDep) {
+				const conflictingFact = citedDepFacts[0];
+				const factVer = (conflictingFact.value as DependencyValue).version;
+				return {
+					pass: false,
+					status: 'needs_input',
+					reason: `version ${ver} differs from ${factVer}`,
+					evidence: [],
+				};
+			}
+		}
+	}
 
 	// If no dates and no numerals, R1 passes
 	if (dates.length === 0 && numerals.length === 0) {
 		return { pass: true };
 	}
 
-	const citedFacts = ledger.filter((f) => claim.fact_ids.includes(f.id));
-
-	// 1. Check dates
+	// 2. Check dates
 	for (const d of dates) {
 		const matchingFact = citedFacts.find((f) => getFactDate(f) === d);
 		if (!matchingFact) {

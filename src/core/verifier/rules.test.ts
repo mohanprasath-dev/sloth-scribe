@@ -72,6 +72,27 @@ const sampleLedger: Fact[] = [
 		evidence_location: 'file:package.json:10-10',
 	},
 	{
+		id: 'F042',
+		type: 'dependency',
+		value: {
+			name: 'zod',
+			version: '^3.23.8',
+			location: 'dependencies',
+		},
+		source: 'package.json',
+		evidence_location: 'file:package.json:11-11',
+	},
+	{
+		id: 'F043',
+		type: 'script',
+		value: {
+			name: 'test',
+			command: 'node --test tests/*.test.js',
+		},
+		source: 'package.json',
+		evidence_location: 'file:package.json:5-5',
+	},
+	{
 		id: 'F048',
 		type: 'readme_line',
 		value: {
@@ -154,6 +175,30 @@ describe('Verifier Rules', () => {
 			expect(res.pass).toBe(false);
 			expect(res.status).toBe('needs_input');
 			expect(res.reason).toBe('number not in cited facts');
+		});
+
+		it('passes when dependency version matches caret version in cited fact', () => {
+			const claim: Claim = {
+				claim_id: 'c-ver-match',
+				text: 'The project depends on commander version 12.0.0.',
+				type: 'dependency',
+				fact_ids: ['F041'],
+			};
+			const res = ruleR1NumericAndDateEquality(claim, sampleLedger);
+			expect(res.pass).toBe(true);
+		});
+
+		it('fails and names both values when dependency version mismatches', () => {
+			const claim: Claim = {
+				claim_id: 'c-ver-mismatch',
+				text: 'The project depends on zod version 3.23.0.',
+				type: 'dependency',
+				fact_ids: ['F042'],
+			};
+			const res = ruleR1NumericAndDateEquality(claim, sampleLedger);
+			expect(res.pass).toBe(false);
+			expect(res.status).toBe('needs_input');
+			expect(res.reason).toBe('version 3.23.0 differs from ^3.23.8');
 		});
 	});
 
@@ -243,6 +288,65 @@ describe('Verifier Rules', () => {
 				claim_id: 'c11',
 				text: 'The application features built-in dark mode support.',
 				type: 'feature',
+				fact_ids: ['F052'],
+			};
+			const res = ruleR3NamedFeatureOrPackage(claim, sampleLedger);
+			expect(res.pass).toBe(false);
+			expect(res.status).toBe('needs_input');
+			expect(res.reason).toContain('README text alone does not prove a feature');
+		});
+
+		it('verifies correct script when quoted command equals script fact value exactly', () => {
+			const claim: Claim = {
+				claim_id: 'c-script-ok',
+				text: "The test script runs 'node --test tests/*.test.js'.",
+				type: 'script',
+				fact_ids: ['F043'],
+			};
+			const res = ruleR3NamedFeatureOrPackage(claim, sampleLedger);
+			expect(res.pass).toBe(true);
+			expect(res.status).toBe('verified');
+			expect(res.evidence?.[0].fact_id).toBe('F043');
+			expect(res.reason).toContain('node --test tests/*.test.js');
+		});
+
+		it('blocks wrong script when quoted command differs from script fact value', () => {
+			const claim: Claim = {
+				claim_id: 'c-script-wrong',
+				text: "The test script runs 'node --wrong'.",
+				type: 'script',
+				fact_ids: ['F043'],
+			};
+			const res = ruleR3NamedFeatureOrPackage(claim, sampleLedger);
+			expect(res.pass).toBe(false);
+			expect(res.status).toBe('needs_input');
+			expect(res.reason).toBe(
+				"script 'test' command 'node --wrong' differs from 'node --test tests/*.test.js'"
+			);
+		});
+
+		it('verifies feature found in commit subject even if only readme cited', () => {
+			const claim: Claim = {
+				claim_id: 'c-feat-commit',
+				text: 'The repository provides CSV export for task lists.',
+				type: 'feature',
+				subject: 'CSV export',
+				fact_ids: ['F048'],
+			};
+			const res = ruleR3NamedFeatureOrPackage(claim, sampleLedger);
+			expect(res.pass).toBe(true);
+			expect(res.status).toBe('verified');
+			expect(res.evidence?.some((e) => e.location.startsWith('commit:'))).toBe(
+				true
+			);
+		});
+
+		it('blocks feature found only in README without code evidence', () => {
+			const claim: Claim = {
+				claim_id: 'c-feat-readme',
+				text: 'The repository features built-in dark mode support.',
+				type: 'feature',
+				subject: 'dark mode',
 				fact_ids: ['F052'],
 			};
 			const res = ruleR3NamedFeatureOrPackage(claim, sampleLedger);
@@ -341,9 +445,7 @@ describe('Verifier Rules', () => {
 			const res = ruleInterpretation(claim, sampleLedger);
 			expect(res.pass).toBe(false);
 			expect(res.status).toBe('needs_input');
-			expect(res.reason).toBe(
-				'interpretation downgraded: contains numeral, date, path, or identifier'
-			);
+			expect(res.reason).toBe('contains numeral 14');
 		});
 
 		it('fails when interpretation text contains a date', () => {
@@ -356,6 +458,7 @@ describe('Verifier Rules', () => {
 			const res = ruleInterpretation(claim, sampleLedger);
 			expect(res.pass).toBe(false);
 			expect(res.status).toBe('needs_input');
+			expect(res.reason).toBe('contains date 2026-03-05');
 		});
 
 		it('fails when interpretation text contains a path', () => {
@@ -368,6 +471,7 @@ describe('Verifier Rules', () => {
 			const res = ruleInterpretation(claim, sampleLedger);
 			expect(res.pass).toBe(false);
 			expect(res.status).toBe('needs_input');
+			expect(res.reason).toBe('contains path src/store.js');
 		});
 
 		it('fails when interpretation text contains a backticked identifier', () => {
@@ -380,6 +484,7 @@ describe('Verifier Rules', () => {
 			const res = ruleInterpretation(claim, sampleLedger);
 			expect(res.pass).toBe(false);
 			expect(res.status).toBe('needs_input');
+			expect(res.reason).toBe('contains identifier `zod`');
 		});
 	});
 });

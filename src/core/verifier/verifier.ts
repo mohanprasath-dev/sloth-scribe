@@ -148,8 +148,12 @@ export function verifyClaim(rawClaim: unknown, ledger: Fact[]): VerifiedClaim {
 		};
 	}
 
-	// Rule R3: Named feature or package
-	if (claim.type === 'dependency' || claim.type === 'feature') {
+	// Rule R3: Named feature, package, or script
+	if (
+		claim.type === 'dependency' ||
+		claim.type === 'feature' ||
+		claim.type === 'script'
+	) {
 		const r3Result = ruleR3NamedFeatureOrPackage(claim, ledger);
 		if (!r3Result.pass) {
 			return {
@@ -158,8 +162,11 @@ export function verifyClaim(rawClaim: unknown, ledger: Fact[]): VerifiedClaim {
 				type: claim.type,
 				fact_ids: claim.fact_ids,
 				status: r3Result.status ?? 'needs_input',
-				reason: r3Result.reason ?? 'feature or dependency unproven',
+				reason:
+					r3Result.reason ??
+					'feature, dependency, or script unproven',
 				evidence: [],
+				...(claim.subject ? { subject: claim.subject } : {}),
 			};
 		}
 		if (r3Result.status === 'verified') {
@@ -169,8 +176,11 @@ export function verifyClaim(rawClaim: unknown, ledger: Fact[]): VerifiedClaim {
 				type: claim.type,
 				fact_ids: claim.fact_ids,
 				status: 'verified',
-				reason: r3Result.reason ?? 'verified feature or dependency',
+				reason:
+					r3Result.reason ??
+					'verified feature, dependency, or script',
 				evidence: r3Result.evidence ?? [],
+				...(claim.subject ? { subject: claim.subject } : {}),
 			};
 		}
 	}
@@ -195,6 +205,7 @@ export function verifyClaim(rawClaim: unknown, ledger: Fact[]): VerifiedClaim {
 		status: 'verified',
 		reason: 'verified against ledger facts',
 		evidence,
+		...(claim.subject ? { subject: claim.subject } : {}),
 	};
 }
 

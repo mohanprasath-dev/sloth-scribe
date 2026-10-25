@@ -14,18 +14,33 @@ export const DRAFT_SYSTEM_PROMPT =
 	'Strict rules:\n' +
 	'1. You may only write claims supported by the listed fact ids.\n' +
 	'2. Cite fact ids for every non-interpretation claim in the fact_ids array.\n' +
-	'3. Assign the appropriate type for each claim: "count" for numerical counts, "date" for commit dates, "feature" for implemented features or files, "dependency" for packages, "metric" for performance numbers, "interpretation" for qualitative observations.\n' +
-	'4. Interpretations must contain no numbers, dates, paths, or identifiers.\n' +
-	'5. Output at most 12 claims total.\n' +
-	'6. Do not invent features, numbers, or benefits.\n' +
-	'7. If README text makes a performance claim, you may report that the README says it, citing the readme_line fact.\n' +
-	'8. Return valid JSON matching the schema: paragraphs array with claims.';
+	'3. Assign the appropriate type for each claim: "count" for numerical counts, "date" for commit dates, "feature" for implemented features or files, "dependency" for packages, "script" for npm scripts, "metric" for performance numbers, "interpretation" for qualitative observations.\n' +
+	'4. claim_id must be c1, c2, ... cN (never a fact id like F001).\n' +
+	'5. You may include an optional "subject" field (short noun phrase naming the feature, package, or script, e.g. "CSV export", "commander", "test").\n' +
+	'6. Interpretations must contain no numbers, dates, paths, or identifiers.\n' +
+	'7. Output at most 12 claims total.\n' +
+	'8. Do not invent features, numbers, or benefits.\n' +
+	'9. If README text makes a performance claim, you may report that the README says it, citing the readme_line fact.\n' +
+	'10. Return valid JSON matching the schema: paragraphs array with claims.';
 
 export interface GenerateDraftOptions {
 	modelOverride?: string;
 	ollamaHost?: string;
 	timeoutMs?: number;
 	fetchFn?: typeof fetch;
+}
+
+export function normalizeClaimIds(draft: Draft): Draft {
+	let index = 1;
+	for (const p of draft.paragraphs) {
+		for (const c of p.claims) {
+			if (/^F\d+/i.test(c.claim_id) || !c.claim_id.toLowerCase().startsWith('c')) {
+				c.claim_id = `c${index}`;
+			}
+			index++;
+		}
+	}
+	return draft;
 }
 
 export function clampDraftClaims(draft: Draft, maxClaims = 12): Draft {
@@ -77,7 +92,7 @@ export async function generateDraft(
 		});
 
 		return {
-			draft: clampDraftClaims(result.draft, 12),
+			draft: clampDraftClaims(normalizeClaimIds(result.draft), 12),
 			modelUsed: primaryModel,
 			fallbackUsed: false,
 			fallbackReason: null,
@@ -103,7 +118,7 @@ export async function generateDraft(
 				});
 
 				return {
-					draft: clampDraftClaims(retryResult.draft, 12),
+					draft: clampDraftClaims(normalizeClaimIds(retryResult.draft), 12),
 					modelUsed: primaryModel,
 					fallbackUsed: false,
 					fallbackReason: null,
@@ -133,7 +148,7 @@ export async function generateDraft(
 		});
 
 		return {
-			draft: clampDraftClaims(fallbackResult.draft, 12),
+			draft: clampDraftClaims(normalizeClaimIds(fallbackResult.draft), 12),
 			modelUsed: fallbackModel,
 			fallbackUsed: true,
 			fallbackReason,
