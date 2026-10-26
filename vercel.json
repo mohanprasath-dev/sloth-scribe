@@ -1,9 +1,1 @@
-{
-	"redirects": [
-		{
-			"source": "/",
-			"destination": "/replay",
-			"permanent": false
-		}
-	]
-}
+{}

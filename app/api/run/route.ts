@@ -42,9 +42,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 	const modelOverride =
 		modelRaw === 'fallback'
 			? config.MODEL_FALLBACK
-			: modelRaw === 'primary' || !modelRaw
-				? config.MODEL_PRIMARY
-				: modelRaw;
+			: modelRaw === 'hosted' || modelRaw === 'gemini'
+				? config.GEMINI_MODEL
+				: modelRaw === 'primary' || !modelRaw
+					? (config.GEMINI_API_KEY ? config.GEMINI_MODEL : config.MODEL_PRIMARY)
+					: modelRaw;
 
 	try {
 		const result = await runPipeline(resolvedRepoPath, modelOverride);

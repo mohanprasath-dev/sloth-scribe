@@ -80,9 +80,10 @@ export function RunForm({ onSubmit, isLoading, error }: RunFormProps) {
 					>
 						<option value="primary">Primary (4B it)</option>
 						<option value="fallback">Fallback (1B)</option>
+						<option value="hosted">Hosted (Gemma 4 via Gemini API)</option>
 					</select>
 					<p className="text-[11px] text-gray-500">
-						Gemma local model variant
+						Gemma local or hosted variant
 					</p>
 				</div>
 			</div>

@@ -70,6 +70,8 @@ export function extractClaimsFromDraft(draft: Draft): Claim[] {
 export type DraftErrorCode =
 	| 'OLLAMA_TIMEOUT'
 	| 'OLLAMA_HTTP_ERROR'
+	| 'GEMINI_TIMEOUT'
+	| 'GEMINI_HTTP_ERROR'
 	| 'INVALID_JSON_RESPONSE'
 	| 'MODEL_FALLBACK_FAILED'
 	| 'DRAFT_GENERATION_FAILED';

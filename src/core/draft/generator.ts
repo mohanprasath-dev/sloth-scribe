@@ -1,6 +1,7 @@
 import { config } from '../config';
 import { ledgerForPrompt } from '../ledger/ledger';
 import { Fact } from '../ledger/types';
+import { callGeminiGemmaChat } from './gemini';
 import { callOllamaChat } from './ollama';
 import {
 	Draft,
@@ -28,6 +29,8 @@ export interface GenerateDraftOptions {
 	ollamaHost?: string;
 	timeoutMs?: number;
 	fetchFn?: typeof fetch;
+	geminiApiKey?: string;
+	geminiModel?: string;
 }
 
 export function normalizeClaimIds(draft: Draft): Draft {
@@ -66,7 +69,15 @@ export async function generateDraft(
 	ledger: Fact[],
 	options?: GenerateDraftOptions
 ): Promise<GenerateDraftResult> {
-	const primaryModel = options?.modelOverride || config.MODEL_PRIMARY;
+	const geminiApiKey = options?.geminiApiKey || config.GEMINI_API_KEY;
+	const isGemini = Boolean(
+		geminiApiKey &&
+			(options?.geminiApiKey ||
+				options?.modelOverride?.startsWith('gemma-4-') ||
+				options?.modelOverride === config.GEMINI_MODEL ||
+				(!options?.modelOverride && config.GEMINI_API_KEY))
+	);
+
 	const fallbackModel = config.MODEL_FALLBACK;
 	const host = options?.ollamaHost || config.OLLAMA_HOST;
 	const timeoutMs = options?.timeoutMs ?? 60000;
@@ -77,6 +88,67 @@ export async function generateDraft(
 	const promptLedger = ledgerForPrompt(ledger, 12000);
 	const userPrompt = `Fact ledger:\n${promptLedger.text}\n\nDraft a concise summary of this repository following all rules.`;
 
+	if (isGemini) {
+		const targetModel =
+			options?.geminiModel ||
+			(options?.modelOverride?.startsWith('gemma-4-')
+				? options.modelOverride
+				: config.GEMINI_MODEL);
+
+		try {
+			const result = await callGeminiGemmaChat({
+				apiKey: geminiApiKey,
+				model: targetModel,
+				systemPrompt: DRAFT_SYSTEM_PROMPT,
+				userPrompt,
+				timeoutMs,
+				fetchFn,
+			});
+
+			return {
+				draft: clampDraftClaims(normalizeClaimIds(result.draft), 12),
+				modelUsed: targetModel,
+				fallbackUsed: false,
+				fallbackReason: null,
+				ollamaMetrics: result.metrics,
+			};
+		} catch (err) {
+			if (
+				err instanceof DraftError &&
+				err.code === 'INVALID_JSON_RESPONSE'
+			) {
+				try {
+					const retryResult = await callGeminiGemmaChat({
+						apiKey: geminiApiKey,
+						model: targetModel,
+						systemPrompt: DRAFT_SYSTEM_PROMPT,
+						userPrompt,
+						timeoutMs,
+						fetchFn,
+					});
+
+					return {
+						draft: clampDraftClaims(normalizeClaimIds(retryResult.draft), 12),
+						modelUsed: targetModel,
+						fallbackUsed: false,
+						fallbackReason: null,
+						ollamaMetrics: retryResult.metrics,
+					};
+				} catch (retryErr) {
+					throw new DraftError(
+						'DRAFT_GENERATION_FAILED',
+						`Gemini hosted model ${targetModel} failed after retry: ${retryErr instanceof Error ? retryErr.message : String(retryErr)}`,
+						targetModel,
+						retryErr
+					);
+				}
+			}
+
+			throw err;
+		}
+	}
+
+	const primaryModel = options?.modelOverride || config.MODEL_PRIMARY;
 	let primaryError: Error | null = null;
 	let fallbackReason: string | null = null;
 
